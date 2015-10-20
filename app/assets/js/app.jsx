@@ -2,13 +2,18 @@ var app = app || {};
 // Если убираем test.js, то надо раскомментить
 var socket = io();
 
-socket.on('disconnect', function() {
-  if (confirm('Внимание, соединение потеряно, попробуйте перезагрузить страницу.')) {
-    setInterval(function() { location.replace('/') }, 1000);
-  }
+socket.on('reconnect', function() {
+  console.log('reconnect');
+});
+
+socket.on('connect_error', function() {
+  console.log('connect_error');
 });
 
 socket.activeChannel = 'general';
+
+// RECONNECT COMPONENT
+var ReconnectComponent = require('../../views/components/reconnect.jsx')(socket);
 
 // CHAT MODULE
 var ChatComponent = require('../../views/components/message.jsx')(socket);
@@ -38,6 +43,7 @@ var SearchResultComponent = require('../../views/components/search-result.jsx')(
     render: function () {
       return (
         <div className="heading">
+          <div className="image"></div>
           <h3 className="heading__header">Shriek Chat</h3>
         </div>
       );
@@ -75,7 +81,8 @@ var SearchResultComponent = require('../../views/components/search-result.jsx')(
   var Content = React.createClass({
     render: function () {
       return (
-        <div className="layout">
+        <div className="layout theme-default">
+          <ReconnectComponent />
           <SettingComponent />
           <LoginComponent />
           <SearchResultComponent />
