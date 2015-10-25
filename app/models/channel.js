@@ -15,6 +15,10 @@ var Channel = new Schema({
     required: true,
     unique: true
   },
+  image: {
+    type: String,
+    default: "https://pbs.twimg.com/profile_images/585443559878299648/AAroqLFC.jpg"
+  },
   is_private: {
     type: Boolean,
     required: true,

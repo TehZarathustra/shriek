@@ -28,7 +28,7 @@ var UserComponent = function (socket) {
       }
 
       return (
-        <div className="group">
+        <div className="group group_users">
           <div className="heading heading_group">
             <h3 className="heading__header">Пользователи</h3>
           </div>
@@ -78,15 +78,43 @@ var UserComponent = function (socket) {
       },
 
       render: function() {
-        var classes = ['list__item'];
-
-        if (this.state.online) {
-          classes.push('online');
-        }
+        var cx = require('classnames');
+        var classesList = cx({
+          'list__item': true,
+          'online': this.state.online
+        });
 
         return (
-          <li className={classes.join(' ')}>
-            <a className="name">{this.props.user.username}</a>
+          <li className={classesList}>
+            <a className="name clearfix">
+              <div className="list__left">
+              <div className="user__image"><img src={this.props.user.setting.image}/></div>
+              </div>
+              <div className="list__right">
+                <div className="list__name">{this.props.user.username}</div>
+                <div className="list__description">
+                  {this.state.online && (
+                    <div>
+                      {this.props.user.setting.description && (
+                        <div>
+                          {this.props.user.setting.description}
+                        </div>
+                      )}
+                      {!this.props.user.setting.description && (
+                        <div>
+                          online
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  {!this.state.online && (
+                    <div className="offline">
+                      offline
+                    </div>
+                  )}
+                </div>
+              </div>
+            </a>
           </li>
         );
       }

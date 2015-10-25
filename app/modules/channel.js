@@ -24,6 +24,7 @@ var ChannelModule = function (socket) {
         name: data.name,
         description: data.description,
         slug: slug,
+        image: data.image,
         is_private: data.privateUsers,
         users: channelUserList
       });

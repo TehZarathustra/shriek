@@ -13,14 +13,20 @@ var SearchComponent = require('./search.jsx')(socket);
       };
     },
 
-    componentDidMount: function () {
+    componentWillMount: function() {
       var _this = this;
 
       socket.on('user info', function (data) {
         if (data.status === 'ok') {
           _this.setState({image: data.user.setting.image});
+          _this.setState({name: data.user.username});
         }
       });
+
+    },
+
+    componentDidMount: function () {
+      var _this = this;
 
       socket.on('user leave', function (data) {
         if (data.status === 'ok') {
@@ -47,11 +53,14 @@ var SearchComponent = require('./search.jsx')(socket);
       return (
         <div className='profile'>
           <SearchComponent/>
-          <div className="profile__out" onClick={this.logout}><i className="fa fa-power-off fa-lg"></i></div>
-          <div className="profile__tools" onClick={this.handleSettingOpen}><i className="fa fa-cog fa-lg"></i></div>
           <div className="profile__img">
             <img src={this.state.image}/>
           </div>
+          <div className="profile__name">
+            {this.state.name}
+          </div>
+          <div className="profile__tools" onClick={this.handleSettingOpen}><i className="fa fa-cog fa-lg"></i></div>
+          <div className="profile__out" onClick={this.logout}><i className="fa fa-power-off fa-lg"></i></div>
         </div>
       );
     }

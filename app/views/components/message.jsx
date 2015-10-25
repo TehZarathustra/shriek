@@ -19,12 +19,14 @@ var ChatComponent = function (socket) {
         force: true,
         scrollAfter: true
       });
+
       socket.emit('channel info', {
         slug: socket.activeChannel
       });
 
       window.shriek = {};
       window.shriek.stopscroll = false;
+
     },
 
     componentWillUnmount: function () {
@@ -40,6 +42,7 @@ var ChatComponent = function (socket) {
       if (text) {
         var message = {
           username: socket.username,
+          image: socket.userImage,
           channel: socket.activeChannel,
           text: text,
           type: 'text'
@@ -75,7 +78,7 @@ var ChatComponent = function (socket) {
     },
 
     componentDidMount: function () {
-      var msglist = $(React.findDOMNode(this.refs.msg_list));
+      var msglist = $(React.findDOMNode(this.refs.msglist));
     },
 
     handleScroll: function () {
@@ -104,7 +107,7 @@ var ChatComponent = function (socket) {
     },
 
     render: function () {
-      var Messages = (<div>Loading messages...</div>);
+      var Messages = (<div>Загрузка сообщений...</div>);
 
       if (this.props.messages) {
         Messages = this.props.messages.map(function (message) {
@@ -125,6 +128,7 @@ var ChatComponent = function (socket) {
   var Message = React.createClass({
     render: function () {
       var classes = ['msg__item'];
+
       var message = this.props.message.raw || this.props.message.text;
 
       if (this.props.message.searched) {
@@ -133,8 +137,9 @@ var ChatComponent = function (socket) {
 
       return (
         <div className={classes.join(' ')}>
-          <MessageDate date={this.props.message.created_at}/>
-          <span className="msg__author">{this.props.message.username}: </span>
+          <span className="msg__avatar"><img src={this.props.message.userImage} /></span>
+          <span className="msg__author">{this.props.message.username}: <br/>
+          <MessageDate date={this.props.message.created_at}/></span>
           <div
             className="msg__text"
             dangerouslySetInnerHTML={{__html: message}} />

@@ -1,6 +1,60 @@
 .theme-default
   // colors
-  $nav: #4b4a48
+  $main-color: #f15723
+  $second-color: #795548
+  $nav-default: #222828
+  $nav-second: #454545
 
   .nav
-    background: $nav
+    background: $nav-second
+
+  .heading__fold
+    color: $main-color
+    a
+      color: $main-color
+
+  .heading__plus
+    color: $main-color
+
+  .heading__fold
+    background: $nav-second
+
+  .list__item
+    &:hover
+      background: lighten($main-color,5%)
+
+    &.active
+      background: $second-color
+      a
+        color: #fff
+      &:before
+        background: lighten($main-color,5%)
+      &:after
+        background: lighten($main-color,5%)
+
+    &.online a
+      &::before
+        background: #0a0
+
+  .group_channels
+    padding: 1em 0
+    background: $nav-default
+
+  .msg__loading
+    color: $main-color
+
+  .more
+    color: $main-color
+
+  .msg__users-wrap
+    background: $nav-second
+
+  .msg__text
+    background: darken($nav-second,5%)
+
+  .channel-info__decs
+    background: $nav-default
+
+
+.emoji
+  background-color: transparent

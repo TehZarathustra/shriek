@@ -9,8 +9,8 @@ var ChannelUsersComponent = function (socket) {
     },
 
     componentDidMount: function () {
-      ChannelUsersStore.listen(this.onChange); // подписываемся на изменения store
-      ChannelUsersActions.initChannels(socket); // вызываем функцию, которая внутри экшена подпишется на событие сокета
+      ChannelUsersStore.listen(this.onChange);
+      ChannelUsersActions.initChannels(socket);
     },
 
     componentWillUnmount: function () {
@@ -39,7 +39,8 @@ var ChannelUsersComponent = function (socket) {
 
       len = channelUsers.length;
       Users = channelUsers.map(function (user) {
-        return (<ChannelUser user={user} key={user} />);
+        // console.log(user);
+        return (<ChannelUser user={user.username} key={user.username} online={user.online} />);
       });
 
       return (
@@ -64,8 +65,14 @@ var ChannelUsersComponent = function (socket) {
 
   var ChannelUser = React.createClass({
     render: function () {
+      var cx = require('classnames');
+      var classesUser = cx({
+        'list__item': true
+        // 'online': this.props.online
+      });
+
       return (
-        <li className="list__item">
+        <li className={classesUser}>
           <span>{this.props.user}</span>
         </li>
       );

@@ -11,7 +11,6 @@ var MessagesActions = require('./../../actions/MessagesActions'); // подкл�
     componentDidMount: function () {
       ChannelsStore.listen(this.onChange); // подписываемся на изменения store
       ChannelsActions.initChannels(socket); // вызываем функцию, которая внутри экшена подпишется на событие сокета
-      ChannelsActions.getChannels(socket); // вызываем первый экшен, который пулучит список каналов. на самом деле, его нужно делать не здесь, а сразу после успешного логина
     },
 
     componentWillUnmount: function () {
@@ -24,20 +23,26 @@ var MessagesActions = require('./../../actions/MessagesActions'); // подкл�
     },
 
     changeChannel: function (event) {
-      socket.activeChannel = event.target.dataset.slug;
+      var slug = $(event.target).closest('.list__item').find('a').data('slug');
+      socket.activeChannel = slug;
+
       $('.msg__loading').fadeIn();
+
       socket.emit('channel get', {
-        channel: event.target.dataset.slug,
+        channel: slug,
         limit: 20,
         force: true,
         scrollAfter: true
       });
+
       socket.emit('channel join', {
-        channel: event.target.dataset.slug
+        channel: slug
       });
+
       socket.emit('channel info', {
         slug: socket.activeChannel
       });
+
       this.refs.show_all_checkbox.getDOMNode().checked = false;
     },
 
@@ -59,7 +64,7 @@ var MessagesActions = require('./../../actions/MessagesActions'); // подкл�
       }
 
       return (
-        <div className="group">
+        <div className="group group_channels">
           <div className="heading heading_group">
             <h3 className="heading__header">Каналы</h3>
             <ButtonAddChannel ref="showModalButton"/>
@@ -83,18 +88,29 @@ var MessagesActions = require('./../../actions/MessagesActions'); // подкл�
     },
 
     render: function () {
+      var cx = require('classnames');
 
-      var className = 'list__item ' +
-        (this.props.channel.isActive ? ' active' : '') +
-        (this.props.channel.isUnread ? ' unread' : '');
+      var classesList = cx({
+        'list__item': true,
+        'active': this.props.channel.isActive,
+        'unread': this.props.channel.isUnread
+      });
 
       return (
-        <li className={className}>
+        <li className={classesList}>
           <a
-            className="name"
+            className="name clearfix"
             onClick={this.clickHandler}
             data-slug={this.props.channel.slug}
-          >{this.props.channel.name}</a>
+          >
+          <div className="list__left">
+            <div className="channel__image"><img src={this.props.channel.image}/></div>
+          </div>
+          <div className="list__right">
+            <div className="list__name">{this.props.channel.name}</div>
+            <div className="list__description">{this.props.channel.description}</div>
+          </div>
+          </a>
         </li>
       );
     }
@@ -102,13 +118,13 @@ var MessagesActions = require('./../../actions/MessagesActions'); // подкл�
 
   var MoreChannels = React.createClass({
     render: function () {
-      var channelsDisplaying = 5;
+      var channelsDisplaying = 4;
       var hiddenChannelsCount = this.props.len - channelsDisplaying;
 
       // Отображаем «Показать» только в случае избыточного количества каналов
       return hiddenChannelsCount > 0 && (
-        <label className="more show_all_label" htmlFor="showAllChannels">
-          <span>Показать +{hiddenChannelsCount}</span>
+        <label className="more" htmlFor="showAllChannels">
+          <span className="fa fa-sort-desc"></span>
         </label>
       );
     }
@@ -172,7 +188,9 @@ var MessagesActions = require('./../../actions/MessagesActions'); // подкл�
       e.preventDefault();
       var name = React.findDOMNode(this.refs.сhannelName).value.trim();
       var description = React.findDOMNode(this.refs.channelDesc).value.trim();
-      ChannelsActions.addNewChannel({name: name, description: description});
+      var image = React.findDOMNode(this.refs.сhannelPic).value.trim();
+
+      ChannelsActions.addNewChannel({name: name, description: description, image: image});
     },
 
     handleCloseModal: function () {
@@ -202,6 +220,10 @@ var MessagesActions = require('./../../actions/MessagesActions'); // подкл�
             <div className="form__row">
               <label className="form__label" htmlFor="channelDesc"><i className="fa fa-edit"></i></label>
               <textarea className="form__textarea" type="text" id="channelDesc" ref="channelDesc" placeholder="Описание канала"></textarea>
+            </div>
+            <div className="form__row">
+              <label className="form__label" htmlFor="channelPic"><i className="fa fa-users"></i></label>
+              <input className="form__text" type="text" id="channelPic" ref="сhannelPic" placeholder="Картинка" />
             </div>
             <div className="form__row userlist">
               {this.props.userlist.length > 0 && (<div>

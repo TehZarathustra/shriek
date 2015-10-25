@@ -32,9 +32,9 @@ var ChannelsUsersActions = alt_obj.createActions({
       if (data.status === 'ok') {
         var usersList = [];
         usersList = data.users.map(function (user) {
-          return user.username;
+          return ({username: user.username, online: user.online});
         });
-        usersList.unshift(socket.username);
+        usersList.unshift({username: socket.username, online: 'online'});
         _this.actions.getUsersChannel(usersList);
       }
     });

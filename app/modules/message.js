@@ -13,11 +13,12 @@ var MessageModule = function(socket) {
   */
 
   socket.on('message send', function (data) {
-
+    console.log(socket.userImage)
     // здесь еще нужно проверять на существование чата, если его нет — создавать
     var res = {};
     var newMessage = MessageModel({
       username: socket.username,
+      userImage: socket.userImage,
       channel: ( data.channel !== undefined ? data.channel : 'general' ), // если канал не пришёл, пишем в general
       text: data.text,
       raw: data.text,

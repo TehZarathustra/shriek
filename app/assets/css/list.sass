@@ -3,7 +3,7 @@
   margin: 10px 0 4px
   list-style: none
 
-$list-item-height: 35px
+$list-item-height: 70px
 
 .show_all_checkbox
   display: none
@@ -20,50 +20,43 @@ $list-item-height: 35px
         font-size: 14px
 
 .list
-  max-height: $list-item-height * 5 // умножаем на количество отображаемых элементов
+  max-height: $list-item-height * 4 // умножаем на количество отображаемых элементов
   overflow: hidden
 
 .list__item
+  position: relative
   display: flex
   align-items: center
   font-size: 15px
+  height: 70px
+  overflow: hidden
   cursor: pointer
-
-  &:hover
-    background: rgba(255, 255, 255, 0.07)
+  transition: .2s ease-in-out 0s
 
   a, span
     display: block
-    padding: 0 30px 0 45px
+    padding: 0 30px 0 15px
     width: 100%
     position: relative
-    line-height: $list-item-height
-
-    &::before
-      content: ''
-      display: none
-      position: absolute
-      height: 10px
-      width: 10px
-      margin-top: -5px
-      border-radius: 100%
-      background: #595959
-      left: 30px
-      top: 50%
 
   &.active
-    background: rgb(68, 68, 68)
-
-    a
-      color: rgb(250, 220, 88)
-
-  &.online
-    position: relative
-
-    a
-      &::before
-        display: block
-        background: #0a0
+    &:before
+      content: ''
+      display: block
+      position: absolute
+      top: 0
+      right: 0
+      height: 100%
+      width: 4px
+    &:after
+      content: ''
+      display: block
+      position: absolute
+      top: 25px
+      right: -12px
+      width: 20px
+      height: 20px
+      transform: rotate(45deg)
 
   &.unread
     a
@@ -78,3 +71,67 @@ $list-item-height: 35px
 
     span
       padding: 0 10px
+
+.list__description
+  white-space: nowrap
+  font-style: italic
+  font-size: .8em
+  font-weight: 300
+  line-height: 30px
+  color: lightgray
+
+.list__name
+  font-family: 'Open Sans'
+  font-weight: 300
+
+.list__left, .list__right
+  float: left
+
+.list__left
+  width: 72px
+
+.channel__image
+  width: 60px
+  height: 60px
+  img
+    border-radius: 5px
+    width: 100%
+    height: 100%
+
+.user__image
+  width: 60px
+  height: 60px
+  img
+    border-radius: 50%
+    width: 100%
+    height: 100%
+
+.group_users
+  padding: 1em 0
+  .list__item
+    cursor: default
+    opacity: .5
+    &.online
+      opacity: 1
+    &:hover
+      background: inherit
+
+.channel-info__heading
+  font-family: 'Open Sans'
+  font-size: 1.2em
+  font-weight: 300
+  color: gray
+
+
+.list_channelUsers
+  .list__item
+    height: 25px
+    cursor: default
+    opacity: .5
+    span
+      padding: 0
+    &.online
+      opacity: 1
+    &:hover
+      background: inherit
+

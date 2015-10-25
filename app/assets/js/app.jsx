@@ -43,8 +43,15 @@ var SearchResultComponent = require('../../views/components/search-result.jsx')(
     render: function () {
       return (
         <div className="heading">
-          <div className="image"></div>
-          <h3 className="heading__header">Shriek Chat</h3>
+          <div className="heading__fold clearfix">
+            <div className="heading__arrow">
+              <a href="#" className="fa fa-arrow-left"></a>
+            </div>
+            <div className="heading__main">
+              <div className="header__logo"></div>
+              <h3 className="header__slogan">Shriek<span className="header__hideable"> Chat</span></h3>
+            </div>
+          </div>
         </div>
       );
     }
@@ -55,10 +62,10 @@ var SearchResultComponent = require('../../views/components/search-result.jsx')(
       var menu, main;
 
       menu = (
-        <div className='nav'>
-          <Title/>
-          <ChannelComponent/>
-          <UserComponent/>
+        <div className="nav">
+          <Title />
+          <ChannelComponent />
+          <UserComponent />
         </div>
       );
 
@@ -100,5 +107,42 @@ var SearchResultComponent = require('../../views/components/search-result.jsx')(
   }
 
   render();
+
+  (function() {
+    var nav = $('.nav');
+    var trigger = $('.heading__arrow');
+    var search = $('.search__form');
+    var viewport = $(window).width();
+
+    if (viewport < 810) {
+      nav.addClass('folded');
+    }
+
+    $(window).on('resize', function() {
+      viewport = $(window).width();
+      if (viewport < 810) {
+        nav.addClass('folded');
+      } else {
+        nav.removeClass('folded');
+      }
+    });
+
+    trigger.click(function(e) {
+      e.preventDefault();
+      if (!nav.hasClass('folded')) {
+        nav.addClass('folded');
+        if (viewport < 690) {
+          setTimeout(function() {
+            search.removeClass('hidden');
+          },200)
+        }
+      } else {
+        nav.removeClass('folded');
+        if (viewport < 690) {
+          search.addClass('hidden');
+        }
+      }
+    });
+  })();
 
 })();

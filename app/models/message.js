@@ -7,6 +7,10 @@ var Message = new Schema({
     type: String,
     required: true
   },
+  userImage: {
+    type: String,
+    required: true
+  },
   channel: {
     type: String,
     required: true

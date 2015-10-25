@@ -42,7 +42,7 @@ var ChannelsStoreFunction = function (socket) {
       if (socket.activeChannel === channel.slug) {
         channel.isActive = true;
         channel.isUnread = false;
-        if (i <= 5) {
+        if (i <= 4) {
           listOfChannels.push(channel);
         } else {
           listOfChannels.unshift(channel);
@@ -154,6 +154,7 @@ var ChannelsStoreFunction = function (socket) {
       socket.emit('channel create', {
         name: data.name,
         description: data.description,
+        image: data.image,
         userslist: users,
         privateUsers: this.newChannel.privateUsers
       });
