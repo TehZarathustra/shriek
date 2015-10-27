@@ -25,10 +25,11 @@ var path = {
   DEST_SRC: 'dist/assets',
   ENTRY_POINT: 'app/assets/js/app.jsx',
   BOWER_DIR: 'app/components',
-  IMGS: 'app/assets/img/**/*'
+  IMGS: 'app/assets/img/**/*',
+  PJS: 'app/assets/front-configs/*.json'
 };
 
-gulp.task('default', ['bower', 'sass', 'build', 'watch']);
+gulp.task('default', ['bower', 'sass', 'build', 'particles', 'watch']);
 
 // watch
 
@@ -91,6 +92,12 @@ gulp.task('build', function () {
 gulp.task('images', function () {
   return gulp.src(path.IMGS)
     .pipe(gulp.dest('./public/assets/img'));
+});
+
+// particles
+gulp.task('particles', function () {
+  return gulp.src(path.PJS)
+    .pipe(gulp.dest('./public/assets/js'));
 });
 
 // sass
