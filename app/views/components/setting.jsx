@@ -19,6 +19,11 @@ var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
     componentDidMount: function () {
       var _this = this;
       var username;
+      var storageTheme = localStorage.userTheme;
+
+      if (storageTheme && storageTheme.length > 0) {
+        _this.setState({theme: storageTheme})
+      }
 
       window.addEventListener('openSetting', function () {
         _this.setState({opened: true});
@@ -43,6 +48,17 @@ var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
           _this.handleClose();
         }
       });
+    },
+
+    handleThemeChange: function (e) {
+      var cont = $('.layout');
+      cont.removeClass(localStorage.userTheme);
+
+      localStorage.removeItem('userTheme');
+      this.setState({theme: e.target.value});
+      localStorage.setItem('userTheme', e.target.value);
+
+      cont.addClass(''+e.target.value+'');
     },
 
     handleEmailChange: function (e) {
@@ -130,6 +146,24 @@ var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
               <i className="fa fa-venus"></i>
             </label>
           </div>
+          <div className="form__row">Поменять оформление</div>
+          <div className="form__row form__row-radio">
+            <input className="form__radio" name="theme" onChange={this.handleThemeChange} type="radio" id="inputDefaultTheme" value="theme-default" defaultChecked={this.state.theme === 'theme-default'} />
+            <label htmlFor="inputDefaultTheme" className="btn">
+              <i className="fa theme-icon theme-icon-default">Оранжевое</i>
+            </label>
+
+            <input className="form__radio" name="theme" onChange={this.handleThemeChange} type="radio" id="inputGreenTheme" value="theme-green" defaultChecked={this.state.theme === 'theme-green'} />
+            <label htmlFor="inputGreenTheme" className="btn">
+              <i className="fa theme-icon theme-icon-green">Зеленое</i>
+            </label>
+
+            <input className="form__radio" name="theme" onChange={this.handleThemeChange} type="radio" id="inputBordoTheme" value="theme-bordo" defaultChecked={this.state.theme === 'theme-bordo'} />
+            <label htmlFor="inputBordoTheme" className="btn">
+              <i className="fa theme-icon theme-icon-bordo">Бордовое</i>
+            </label>
+          </div>
+
           <div className="form__row">
             <label className="form__label" htmlFor="inputDescription"><i className="fa fa-edit"></i></label>
             <textarea className="form__textarea" onChange={this.handleDescriptionChange} id="inputDescription" placeholder="Статус" value={this.state.description} />

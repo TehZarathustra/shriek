@@ -13,6 +13,9 @@
     a
       color: $main-color
 
+  .modal
+    background-color: #c1641d
+
   .heading__plus
     color: $main-color
 
@@ -82,9 +85,200 @@
       margin-bottom: 14px
       outline: none
 
+  .channel__image
+    background-color: #cd5622
+
   .msg__searched
     background-color: rgba(255,255,255,.1)
 
+.theme-green
+  // colors
+  $main-color: #3e8780
+  $second-color: darken(#61b043,20%)
+  $nav-default: #104744
+  $nav-second: #136561
+
+  .channel__image
+    background-color: $main-color
+
+  .modal
+    background-color: $nav-second
+
+  .nav
+    background: $nav-second
+
+  .heading__fold
+    color: $main-color
+    a
+      color: $main-color
+
+  .heading__plus
+    color: $main-color
+
+  .heading__fold
+    background: $nav-second
+
+  .list__item
+    &:hover
+      background: lighten($main-color,5%)
+
+    &.active
+      background: $second-color
+      a
+        color: #fff
+      &:before
+        background: lighten($main-color,5%)
+      &:after
+        background: lighten($main-color,5%)
+
+    &.online a
+      &::before
+        background: #0a0
+
+  .group_channels
+    padding: 1em 0
+    background: $nav-default
+
+  .msg__loading
+    color: $main-color
+
+  .more
+    color: $main-color
+
+  .msg__users-wrap
+    background: $nav-second
+
+  .msg__text
+    background: darken($nav-second,5%)
+
+  .channel-info__decs
+    background: $nav-default
+
+  .btn
+    background-color: darken($main-color, 5%)
+    border-bottom: 4px solid darken($main-color, 10%)
+    &:hover
+      opacity: .6
+    &:active
+      background: darken($main-color, 10%)
+      border: none
+      margin-top: 4px
+      outline: none
+
+  .form__radio:checked + label.btn
+    background-color: darken($main-color, 10%)
+    border: none
+    margin-top: 4px
+    outline: none
+
+  .auth__btn
+    border-bottom: 4px solid darken($main-color, 10%)
+    background-color: darken($main-color, 5%)
+    &:active
+      background: darken($main-color, 10%)
+      border: none
+      top: 4px
+      margin-bottom: 14px
+      outline: none
+
+  .msg__searched
+    background-color: rgba(255,255,255,.1)
+
+
+// third theme
+
+.theme-bordo
+  // colors
+  $main-color: lighten(#f56526,4%)
+  $second-color: darken(#d63628,20%)
+  $nav-default: #632638
+  $nav-second: #3b1c24
+
+  .channel__image
+    background-color: $main-color
+
+  .modal
+    background-color: #B12D22
+
+  .nav
+    background: $nav-second
+
+  .heading__fold
+    color: $main-color
+    a
+      color: $main-color
+
+  .heading__plus
+    color: $main-color
+
+  .heading__fold
+    background: $nav-second
+
+  .list__item
+    &:hover
+      background: lighten($main-color,5%)
+
+    &.active
+      background: $second-color
+      a
+        color: #fff
+      &:before
+        background: lighten($main-color,5%)
+      &:after
+        background: lighten($main-color,5%)
+
+    &.online a
+      &::before
+        background: #0a0
+
+  .group_channels
+    padding: 1em 0
+    background: $nav-default
+
+  .msg__loading
+    color: $main-color
+
+  .more
+    color: $main-color
+
+  .msg__users-wrap
+    background: $nav-second
+
+  .msg__text
+    background: $nav-default
+
+  .channel-info__decs
+    background: $nav-default
+
+  .btn
+    background-color: darken($main-color, 10%)
+    border-bottom: 4px solid darken($main-color, 20%)
+    &:hover
+      opacity: .6
+    &:active
+      background: darken($main-color, 20%)
+      border: none
+      margin-top: 4px
+      outline: none
+
+  .form__radio:checked + label.btn
+    background-color: darken($main-color, 20%)
+    border: none
+    margin-top: 4px
+    outline: none
+
+  .auth__btn
+    border-bottom: 4px solid darken($main-color, 20%)
+    background-color: darken($main-color, 10%)
+    &:active
+      background: darken($main-color, 20%)
+      border: none
+      top: 4px
+      margin-bottom: 14px
+      outline: none
+
+  .msg__searched
+    background-color: rgba(255,255,255,.1)
 
 .emoji
   background-color: transparent

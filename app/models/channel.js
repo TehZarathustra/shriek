@@ -17,7 +17,7 @@ var Channel = new Schema({
   },
   image: {
     type: String,
-    default: "https://i.imgur.com/sll3ex8.png"
+    default: "http://i.imgur.com/pxHL2xi.png"
   },
   is_private: {
     type: Boolean,

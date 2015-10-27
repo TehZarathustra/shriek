@@ -92,9 +92,27 @@ var SearchResultComponent = require('../../views/components/search-result.jsx')(
   });
 
   var Content = React.createClass({
+    componentWillMount: function() {
+      var storageTheme = localStorage.userTheme;
+
+      if (storageTheme) {
+        this.setState({theme: storageTheme});
+      } else {
+        this.setState({theme: 'theme-default'});
+      }
+
+    },
+
     render: function () {
+      var cx = require('classnames');
+      var theme = cx({
+        'layout': true,
+        'theme-default': this.state.theme == 'theme-default',
+        'theme-green': this.state.theme == 'theme-green',
+        'theme-bordo': this.state.theme == 'theme-bordo'
+      });
       return (
-        <div className="layout theme-default">
+        <div className={theme}>
           <ReconnectComponent />
           <SettingComponent />
           <LoginComponent />
