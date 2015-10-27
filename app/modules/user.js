@@ -276,7 +276,7 @@ var UserModule = function (socket, io) {
         }
 
         socket.emit('user update', out);
-        socket.broadcast.emit('user update', out);
+        socket.broadcast.emit('user update', 'empty');
       }
     );
 

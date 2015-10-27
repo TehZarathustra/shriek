@@ -38,7 +38,7 @@ var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
       });
 
       socket.on('user update', function (data) {
-        if (data.status == 'ok') {
+        if (data != 'empty' && data.status == 'ok') {
           socket.emit('user info', {username: data.user.username});
           _this.handleClose();
         }
