@@ -16,7 +16,7 @@ $list-item-height: 70px
       font-size: 0
 
       &::before
-        content: 'Скрыть'
+        content: 'СSкрыть'
         font-size: 14px
 
 .list
@@ -134,4 +134,9 @@ $list-item-height: 70px
       opacity: 1
     &:hover
       background: inherit
+
+#showAllUsers:checked~.more>span:before
+  position: relative
+  top: 5px
+  content: '\f0de'
 

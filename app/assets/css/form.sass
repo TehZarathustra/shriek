@@ -5,24 +5,54 @@
 
 .form__label
   width: 13px
+  position: absolute
   padding: 5px 7px
   display: inline-block
-  border-radius: 6px 0 0 6px
-  border: 1px solid #888
-  background: #9C9A9A
   color: #fff
   font-family: 'Open Sans'
   cursor: pointer
 
-.form__text,
+.form__text
+  border: none
+  border-bottom: 1px solid #fff
+  border-left: none
+  background: none
+  flex-grow: 1
+  color: #fff
+  font-size: 1.5em
+
+input::-webkit-input-placeholder
+  color: lightgray
+
+input:-moz-placeholder
+  color: lightgray
+
+textarea::-webkit-input-placeholder
+  color: lightgray
+
+textarea:-moz-placeholder
+  color: lightgray
+
 .form__textarea
   padding: 5px 7px
-  border: 1px solid #888
-  border-left: none
-  background: #fff
+  border: 1px solid #fff
+  background: none
   flex-grow: 1
-  border-radius: 0 6px 6px 0
+  border-radius: 4px
+  font-size: 1em
+  color: #fff
+
 
 .form__row
   display: flex
-  margin: 20px
+  margin-bottom: 25px
+
+.form__row-social
+  text-align: center
+  position: relative
+  color: #fff
+  font-size: .9em
+  span
+    position: relative
+    display: inline-block
+    padding: 1em

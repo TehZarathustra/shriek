@@ -20,8 +20,14 @@ var AuthStoreFunction = function () {
     }
   }
 
+  var deleteCookie = function (name) {
+    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+  };
+
   localStorage.removeItem('userName');
-  localStorage.removeItem('userPass');
+  localStorage.removeItem('userHash');
+  deleteCookie('psUser');
+  location.reload();
 };
 
   if (AuthStoreObj === null) {

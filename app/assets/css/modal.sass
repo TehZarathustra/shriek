@@ -4,16 +4,43 @@
   left: 0
   right: 0
   bottom: 0
-  background: rgba(0,0,0,.86)
+  font-family: 'Open Sans', sans-serif
+  font-weight: 300
+  background-color: #c1641d
   z-index: 100
 
 .modal__body
-  position: relative
-  width: 400px
+  position: absolute
+  width: 320px
+  overflow: hidden
+  left: 50%
+  top: 50%
+  transform: translateX(-50%) translateY(-50%)
   padding: 20px 0
-  border: 2px solid #404040
-  background: #c4c4c4
+  text-align: left
+  h2
+    font-family: 'Open Sans', sans-serif
+    font-weight: 300
+    margin: 0 0 1em 0
+    font-size: 3em
+    color: #fff
+
+.default__modal
   text-align: center
-  margin: 50px auto
-  max-height: calc(90% - 100px)
-  overflow: auto
+  .form__text, textarea
+    font-size: 1.1em
+    padding: 5px 0 0 30px
+  button[type='submit']
+    width: 100%
+  h3
+    font-family: 'Open Sans', sans-serif
+    font-weight: 300
+    margin: 1em 0 1em 0
+    font-size: 1.5em
+    color: #fff
+  label
+    color: #fff
+    cursor: pointer
+    font-family: 'Open Sans', sans-serif
+    font-weight: 300
+

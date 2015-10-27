@@ -55,6 +55,36 @@
   .channel-info__decs
     background: $nav-default
 
+  .btn
+    background-color: darken($main-color, 10%)
+    border-bottom: 4px solid darken($main-color, 20%)
+    &:hover
+      opacity: .6
+    &:active
+      background: darken($main-color, 20%)
+      border: none
+      margin-top: 4px
+      outline: none
+
+  .form__radio:checked + label.btn
+    background-color: darken($main-color, 20%)
+    border: none
+    margin-top: 4px
+    outline: none
+
+  .auth__btn
+    border-bottom: 4px solid darken($main-color, 20%)
+    background-color: darken($main-color, 10%)
+    &:active
+      background: darken($main-color, 20%)
+      border: none
+      top: 4px
+      margin-bottom: 14px
+      outline: none
+
+  .msg__searched
+    background-color: rgba(255,255,255,.1)
+
 
 .emoji
   background-color: transparent

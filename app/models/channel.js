@@ -17,7 +17,7 @@ var Channel = new Schema({
   },
   image: {
     type: String,
-    default: "https://pbs.twimg.com/profile_images/585443559878299648/AAroqLFC.jpg"
+    default: "https://i.imgur.com/sll3ex8.png"
   },
   is_private: {
     type: Boolean,
@@ -41,6 +41,7 @@ Channel.on('init', function (model) {
   var newChannel = model({
     name: 'General',
     slug: 'general',
+    description: 'Основной канал',
     is_private: false,
     users: ['superadmin'] // durty hack
   });

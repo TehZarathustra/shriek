@@ -1,4 +1,7 @@
 var ChatComponent = function (socket) {
+  var React = require('react');
+  var ReactDOM = require('react-dom');
+  var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
   var MessagesStore = require('./../../stores/MessagesStore')(socket); // подключаем стор
   var MessagesActions = require('./../../actions/MessagesActions'); // подключаем экшены
 
@@ -24,9 +27,12 @@ var ChatComponent = function (socket) {
         slug: socket.activeChannel
       });
 
+      // socket.on('user enter', function() {
+        particlesJS.load('msg-particles', 'assets/js/particles-msg.json', function() {});
+      // });
+
       window.shriek = {};
       window.shriek.stopscroll = false;
-
     },
 
     componentWillUnmount: function () {
@@ -60,7 +66,7 @@ var ChatComponent = function (socket) {
       return (
         <div className="msg">
           <div className="msg__loading"><i className="fa fa-circle-o-notch fa-spin"></i></div>
-          <div className="msg__wrap">
+          <div className="msg__wrap" id="msg-particles">
             <div className="msg__body">
               <MessagesList messages={this.state.messages} hideMore={this.state.hideMore} />
             </div>
@@ -78,12 +84,12 @@ var ChatComponent = function (socket) {
     },
 
     componentDidMount: function () {
-      var msglist = $(React.findDOMNode(this.refs.msglist));
+      var msglist = $(ReactDOM.findDOMNode(this.refs.msglist));
     },
 
     handleScroll: function () {
       if (!this.props.stopScroll) {
-        var node = this.getDOMNode();
+        var node = this;
 
         if (node.scrollTop === 0) {
           if (this.state.scrollValue == 0) {
@@ -127,22 +133,34 @@ var ChatComponent = function (socket) {
 
   var Message = React.createClass({
     render: function () {
-      var classes = ['msg__item'];
+      var cx = require('classnames');
+      var classes = cx({
+        'msg__item': true,
+        'msg__searched': this.props.message.searched
+      });
 
       var message = this.props.message.raw || this.props.message.text;
 
-      if (this.props.message.searched) {
-        classes.push('msg__searched');
-      }
-
       return (
-        <div className={classes.join(' ')}>
+        <div className={classes}>
+          <ReactCSSTransitionGroup
+              transitionName = {{
+                leave: 'fadeInOutLeft',
+                // appear: 'fadeIn',
+                appear: 'fadeInLeft'
+              }} transitionAppear={true}
+              transitionAppearTimeout={1000}
+              transitionEnterTimeout={1500}
+              transitionLeaveTimeout={1500} >
+          <div className="animated">
           <span className="msg__avatar"><img src={this.props.message.userImage} /></span>
           <span className="msg__author">{this.props.message.username}: <br/>
           <MessageDate date={this.props.message.created_at}/></span>
           <div
             className="msg__text"
             dangerouslySetInnerHTML={{__html: message}} />
+          </div>
+          </ReactCSSTransitionGroup>
         </div>
       );
     }
@@ -152,13 +170,13 @@ var ChatComponent = function (socket) {
     handleSubmit: function (e) {
       e.preventDefault();
       var _this = this; // чтобы потом найти текстовое поле
-      var text = this.refs.text.getDOMNode().value; // получаем текст
-      var submitButton = this.refs.submitButton.getDOMNode(); // получаем кнопку
+      var text = this.refs.text.value; // получаем текст
+      var submitButton = this.refs.submitButton; // получаем кнопку
       submitButton.innerHTML = 'Posting message...'; // отключаем кнопку и меняем текст
       submitButton.setAttribute('disabled', 'disabled');
 
       this.props.submitMessage(text, function (err) { // вызываем submitMessage, передаем колбек
-        _this.refs.text.getDOMNode().value = '';
+        _this.refs.text.value = '';
         submitButton.innerHTML = 'Post message';
         submitButton.removeAttribute('disabled');
       });
@@ -166,7 +184,7 @@ var ChatComponent = function (socket) {
     },
 
     resize: function() {
-      var textarea = this.refs.text.getDOMNode();
+      var textarea = this.refs.text;
       textarea.style.height = 'auto';
       textarea.style.height = (textarea.scrollHeight > 105 ? 105 : textarea.scrollHeight)+'px';
     },

@@ -1,4 +1,6 @@
 var SettingComponent = function (socket) {
+var React = require('react');
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
   var SettingBlock = React.createClass({
 
@@ -91,16 +93,24 @@ var SettingComponent = function (socket) {
 
     render: function () {
       var formSetting;
+      var nickname = socket.username;
 
       formSetting = (
-        <form className="form modal__body setting" onSubmit={this.handleSave}>
-          <div className="form__row">
-            <label className="form__label" htmlFor="inputFirstName"><i className="fa fa-edit"></i></label>
-            <input className="form__text" onChange={this.handleFirstNameChange} type="text" id="inputFirstName" placeholder="First name" value={this.state.first_name} />
-          </div>
-          <div className="form__row">
-            <label className="form__label" htmlFor="inputLastName"><i className="fa fa-edit"></i></label>
-            <input className="form__text" onChange={this.handleLastNameChange} type="text" id="inputLastName" placeholder="Last name" value={this.state.last_name} />
+        <div>
+        <form className="form modal__body setting animated default__modal" onSubmit={this.handleSave}>
+          <ReactCSSTransitionGroup
+              transitionName = {{
+                enter: 'enter',
+                leave: 'flipOutX',
+                appear: 'fadeIn'
+              }} transitionAppear={true}
+              transitionAppearTimeout={1500}
+              transitionEnterTimeout={1500}
+              transitionLeaveTimeout={1500} >
+              <div className="animated">
+          <h2 className="modal__heading heading">Ваш профиль</h2>
+          <div className="setting__image">
+            <img src={this.state.image} />
           </div>
           <div className="form__row">
             <label className="form__label" htmlFor="inputEmail"><i className="fa fa-envelope-o"></i></label>
@@ -108,10 +118,9 @@ var SettingComponent = function (socket) {
           </div>
           <div className="form__row">
             <label className="form__label" htmlFor="inputImage"><i className="fa fa-picture-o"></i></label>
-            <input className="form__text" onChange={this.handleImageChange} type="url" id="inputImage" placeholder="Url of Image" value={this.state.image} />
+            <input className="form__text" onChange={this.handleImageChange} type="url" id="inputImage" placeholder="Ссылка на картинку" value={this.state.image} />
           </div>
           <div className="form__row form__row-radio">
-            <span className="form__label"><i className="fa fa-venus-mars"></i></span>
             <input className="form__radio" name="sex" onChange={this.handleSexChange} type="radio" id="inputSexMale" value="male" defaultChecked={this.state.sex === 'male'} />
             <label htmlFor="inputSexMale" className="btn">
               <i className="fa fa-mars"></i>
@@ -123,12 +132,14 @@ var SettingComponent = function (socket) {
           </div>
           <div className="form__row">
             <label className="form__label" htmlFor="inputDescription"><i className="fa fa-edit"></i></label>
-            <textarea className="form__textarea" onChange={this.handleDescriptionChange} id="inputDescription" placeholder="Description" value={this.state.description} />
+            <textarea className="form__textarea" onChange={this.handleDescriptionChange} id="inputDescription" placeholder="Статус" value={this.state.description} />
           </div>
-          <button className="btn" onClick={this.handleSave} type="submit">Update</button>
-          <span> </span>
-          <button className="btn" onClick={this.handleClose} type="button">Close</button>
+          <button className="btn" onClick={this.handleSave} type="submit">Сохранить</button>
+          </div>
+          </ReactCSSTransitionGroup>
         </form>
+        <div className="close-button" onClick={this.handleClose}></div>
+        </div>
       );
 
       return (

@@ -13,7 +13,6 @@ var MessageModule = function(socket) {
   */
 
   socket.on('message send', function (data) {
-    console.log(socket.userImage)
     // здесь еще нужно проверять на существование чата, если его нет — создавать
     var res = {};
     var newMessage = MessageModel({

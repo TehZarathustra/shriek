@@ -1,4 +1,5 @@
 var UserComponent = function (socket) {
+  var React = require('react');
   var Users;
 
   var UsersList = React.createClass({
@@ -126,9 +127,15 @@ var UserComponent = function (socket) {
       var hiddenUsersCount = Users.length - usersDisplaying;
 
       // Отображаем «Показать» только в случае избыточного количества пользователей
+      // return hiddenUsersCount > 0 && (
+      //   <label className="more show_all_label" htmlFor="showAllUsers">
+      //     <span>Показать +{hiddenUsersCount}</span>
+      //   </label>
+      // );
+
       return hiddenUsersCount > 0 && (
-        <label className="more show_all_label" htmlFor="showAllUsers">
-          <span>Показать +{hiddenUsersCount}</span>
+        <label className="more" htmlFor="showAllUsers">
+          <span className="fa fa-sort-desc"></span>
         </label>
       );
     }

@@ -3,10 +3,9 @@
 
 .search-results
   text-align: left
-  height: calc(100% - 130px)
   overflow: auto
-  padding: 0 15px
   margin: 0 0 20px 0
+  color: #fff
 
   .search-result
     padding: 5px;
@@ -14,10 +13,7 @@
     cursor: pointer
 
   .search-result:hover
-    background: #E0E0E0
-
-  .search-result:active
-    background: #fff
+    background: rgba(0,0,0,.3)
 
   .search-result__author
     float: left
@@ -35,13 +31,17 @@
       display: none
 
 .search__form
+  margin-right: 20px
   .form__label
     background: none
-    border-radius: 15px 0 0 15px
-    border-color: lighten(#303030,5%)
+    position: absolute
   .form__text
-    border-radius: 0 15px 15px 0
+    border: none
+    border-radius: 15px
+    padding: 5px 0 5px 30px
+    font-size: 1em
     background: #303030
-    border-color: lighten(#303030,5%)
+  .form__row
+    margin-bottom: 0
   i
     color: #878988

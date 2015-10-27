@@ -1,5 +1,5 @@
 var ProfileComponent = function (socket) {
-
+var React = require('react');
 if (!AuthStore) var AuthStore = require('./../../stores/AuthStore')(socket); // подключаем стор
 var AuthActions = require('./../../actions/AuthActions'); // подключаем экшены
 
@@ -36,7 +36,7 @@ var SearchComponent = require('./search.jsx')(socket);
             }
           }
         } else {
-          alert('something unpredictable happened');
+          alert('oh shit, im sorry');
         }
       });
     },

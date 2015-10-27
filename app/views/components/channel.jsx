@@ -1,4 +1,7 @@
 var ChannelComponent = function (socket) {
+var React = require('react');
+var ReactDOM = require('react-dom');
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 var ChannelsStore = require('./../../stores/ChannelsStore')(socket); // подключаем стор
 var ChannelsActions = require('./../../actions/ChannelsActions'); // подключаем экшены
 var MessagesActions = require('./../../actions/MessagesActions'); // подключаем экшены
@@ -43,7 +46,7 @@ var MessagesActions = require('./../../actions/MessagesActions'); // подкл�
         slug: socket.activeChannel
       });
 
-      this.refs.show_all_checkbox.getDOMNode().checked = false;
+      this.refs.show_all_checkbox.checked = false;
     },
 
     render: function () {
@@ -104,7 +107,11 @@ var MessagesActions = require('./../../actions/MessagesActions'); // подкл�
             data-slug={this.props.channel.slug}
           >
           <div className="list__left">
-            <div className="channel__image"><img src={this.props.channel.image}/></div>
+            <div className="channel__image">
+              {this.props.channel.image && this.props.channel.image.length > 0 && (
+                <img src={this.props.channel.image}/>
+              )}
+            </div>
           </div>
           <div className="list__right">
             <div className="list__name">{this.props.channel.name}</div>
@@ -186,11 +193,22 @@ var MessagesActions = require('./../../actions/MessagesActions'); // подкл�
   var AddChannelModal = React.createClass({
     handleSubmit: function (e) {
       e.preventDefault();
-      var name = React.findDOMNode(this.refs.сhannelName).value.trim();
-      var description = React.findDOMNode(this.refs.channelDesc).value.trim();
-      var image = React.findDOMNode(this.refs.сhannelPic).value.trim();
+      var name = ReactDOM.findDOMNode(this.refs.сhannelName).value.trim();
+      var description = ReactDOM.findDOMNode(this.refs.channelDesc).value.trim();
+      var image = ReactDOM.findDOMNode(this.refs.сhannelPic).value.trim();
 
-      ChannelsActions.addNewChannel({name: name, description: description, image: image});
+      var names = ['name','description','image'];
+      var values = [name,description,image];
+
+      var obj = {};
+
+      for (var i = 0; i < names.length; ++i) {
+        if (values[i].length > 0) {
+          obj[names[i]] = values[i];
+        }
+      }
+
+      ChannelsActions.addNewChannel(obj);
     },
 
     handleCloseModal: function () {
@@ -206,8 +224,18 @@ var MessagesActions = require('./../../actions/MessagesActions'); // подкл�
     render: function () {
       return (
         <div className="modal">
-          <form className="form modal__body" onSubmit={this.handleSubmit}>
-            <h2 className="modal__heading heading">Добавьте канал</h2>
+          <form className="form modal__body default__modal" onSubmit={this.handleSubmit}>
+          <ReactCSSTransitionGroup
+              transitionName = {{
+                enter: 'enter',
+                leave: 'flipOutX',
+                appear: 'fadeIn'
+              }} transitionAppear={true}
+              transitionAppearTimeout={1500}
+              transitionEnterTimeout={1500}
+              transitionLeaveTimeout={1500} >
+              <div className="animated">
+            <h2 className="modal__heading heading">Новый канал</h2>
             <div className="form__row">
                   {ChannelsStore.getState().hasError &&(
                     <div>{ChannelsStore.getState().hasError}</div>
@@ -218,12 +246,12 @@ var MessagesActions = require('./../../actions/MessagesActions'); // подкл�
               <input className="form__text" type="text" id="channelName" ref="сhannelName" placeholder="Назовите" />
             </div>
             <div className="form__row">
-              <label className="form__label" htmlFor="channelDesc"><i className="fa fa-edit"></i></label>
-              <textarea className="form__textarea" type="text" id="channelDesc" ref="channelDesc" placeholder="Описание канала"></textarea>
+              <label className="form__label" htmlFor="channelPic"><i className="fa fa-image"></i></label>
+              <input className="form__text" type="text" id="channelPic" ref="сhannelPic" placeholder="Картинка" />
             </div>
             <div className="form__row">
-              <label className="form__label" htmlFor="channelPic"><i className="fa fa-users"></i></label>
-              <input className="form__text" type="text" id="channelPic" ref="сhannelPic" placeholder="Картинка" />
+              <label className="form__label" htmlFor="channelDesc"><i className="fa fa-edit"></i></label>
+              <textarea className="form__textarea" type="text" id="channelDesc" ref="channelDesc" placeholder="Описание канала"></textarea>
             </div>
             <div className="form__row userlist">
               {this.props.userlist.length > 0 && (<div>
@@ -233,9 +261,10 @@ var MessagesActions = require('./../../actions/MessagesActions'); // подкл�
               </div>)}
             </div>
             <button className="btn" type="submit">Добавить</button>
-            <span> </span>
-            <button className="btn" onClick={this.handleCloseModal} type="button">Закрыть</button>
+            </div>
+             </ReactCSSTransitionGroup>
           </form>
+          <div className="close-button" onClick={this.handleCloseModal}></div>
         </div>
       );
     }

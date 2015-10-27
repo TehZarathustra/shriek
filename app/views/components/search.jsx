@@ -1,5 +1,6 @@
 var SearchComponent = function (socket) {
 
+var React = require('react');
 var ChannelsStore = require('./../../stores/ChannelsStore')(socket); // подключаем стор
 
   var SearchBlock = React.createClass({

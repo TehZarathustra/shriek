@@ -31,7 +31,7 @@ var User = new Schema({
     },
     image: {
       type: String,
-      default: "http://media.steampowered.com/steamcommunity/public/images/avatars/78/78acf20c6efa57fcadad137ff7ababb6f8210305_full.jpg"
+      default: "http://i.imgur.com/W5jG60g.jpg"
     },
     first_name: {
       type: String

@@ -21,7 +21,7 @@ body
   visibility: hidden
 
 input.invalid
-  box-shadow: 0 0 0 2px red
+  border-color: red
 
 .overflow
   position: fixed
@@ -33,3 +33,39 @@ input.invalid
   display: flex
   justify-content: center
   z-index: 100
+
+.close-button
+  width: 150px
+  height: 150px
+  top: 1em
+  right: 1em
+  cursor: pointer
+  position: absolute
+  display: block
+  z-index: 200
+  text-indent: -9999px
+  &:before
+    content: ''
+    width: 55%
+    height: 2px
+    background: #ffffff
+    position: absolute
+    top: 48%
+    left: 22%
+    transform: rotate(-45deg)
+    transition: all 0.3s ease-out
+  &:after
+    content: ''
+    width: 55%
+    height: 2px
+    background: #ffffff
+    position: absolute
+    top: 48%
+    left: 22%
+    transform: rotate(-45deg)
+    transition: all 0.3s ease-out
+    transform: rotate(45deg)
+    transition: all 0.3s ease-out
+  &:hover
+    &:before, &:after
+      transform: rotate(180deg)

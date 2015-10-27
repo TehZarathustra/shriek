@@ -10,6 +10,7 @@ var prefix = require('gulp-autoprefixer');
 var source = require('vinyl-source-stream');
 var browserify = require('browserify');
 var reactify = require('reactify');
+var resolutions = require('browserify-resolutions');
 
 var path = {
   HTML: 'app/views/layouts/index.html',
@@ -80,6 +81,7 @@ gulp.task('build', function () {
     transform: [reactify]
   })
     .on('error', function (err) {console.log(err);})
+    .plugin(resolutions, '*')
     .bundle()
     .pipe(source(path.MINIFIED_OUT))
     .pipe(gulp.dest(path.DEST_BUILD));

@@ -1,4 +1,8 @@
 var app = app || {};
+
+var React = require('react');
+var ReactDOM = require('react-dom');
+
 // Если убираем test.js, то надо раскомментить
 var socket = io();
 
@@ -11,6 +15,7 @@ socket.on('connect_error', function() {
 });
 
 socket.activeChannel = 'general';
+
 
 // RECONNECT COMPONENT
 var ReconnectComponent = require('../../views/components/reconnect.jsx')(socket);
@@ -35,6 +40,7 @@ var SettingComponent = require('../../views/components/setting.jsx')(socket);
 
 // SEARCH RESULTS
 var SearchResultComponent = require('../../views/components/search-result.jsx')(socket);
+
 
 (function () {
   'use strict';
@@ -100,9 +106,9 @@ var SearchResultComponent = require('../../views/components/search-result.jsx')(
   });
 
   function render() {
-    React.render(
+    ReactDOM.render(
       <Content/>,
-      document.body
+      document.getElementById('container')
     );
   }
 

@@ -8,6 +8,8 @@ module.exports = function (app, domain) {
   var psUser;
   var firstTime = false;
 
+  console.log(domain);
+
   passport.use(new TwitterStrategy({
     consumerKey: configPs.twitter.key,
     consumerSecret: configPs.twitter.secret,

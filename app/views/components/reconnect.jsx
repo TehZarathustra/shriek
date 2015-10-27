@@ -1,5 +1,5 @@
 var ReconnectComponent = function (socket) {
-
+var React = require('react');
   var ReconnectComponent = React.createClass({
     getInitialState: function () {
       return {

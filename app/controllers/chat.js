@@ -15,13 +15,13 @@ var passport = require('passport');
 var domain = '';
 switch (process.env.NODE_ENV) {
   case 'dev':
-    domain = 'shriek-chat.tk:81';
+    domain = 'shriek-zarathustra.herokuapp.com/';
     break;
   case 'production':
-    domain = 'shriek-chat.tk';
+    domain = 'shriek-zarathustra.herokuapp.com/';
     break;
   default:
-    domain = 'localhost:3000';
+    domain = 'localhost:5000';
     break;
 }
 

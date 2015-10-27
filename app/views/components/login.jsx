@@ -1,8 +1,5 @@
 var LoginComponent = function(socket) {
 
-// LOGIN ERROR MODULE
-var LoginError = require('../../views/components/login-error.jsx')(socket);
-
 // LOGIN DEFAULT MODULE
 var LoginDefault = require('../../views/components/login-default.jsx')(socket);
 
@@ -13,6 +10,11 @@ var LoginPassport = require('../../views/components/login-passport.jsx')(socket)
 var AuthStore = require('./../../stores/AuthStore')(socket);
 var AuthActions = require('./../../actions/AuthActions');
 
+
+var React = require('react');
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+
+// var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 // askLogin component
   var AskLogin = React.createClass({
@@ -38,13 +40,13 @@ var AuthActions = require('./../../actions/AuthActions');
 
       var username;
       var storageUser = localStorage.userName;
-      var storagePass = localStorage.userPass;
+      var storageHash = localStorage.userHash;
       var _this = this;
 
-      if (storageUser != null && storagePass != null) {
+      if (storageUser != null && storageHash != null) {
         socket.emit('user enter', {
           username: storageUser,
-          password: storagePass
+          password: storageHash
         });
       }
 
@@ -88,6 +90,9 @@ var AuthActions = require('./../../actions/AuthActions');
 
       socket.on('user enter', function(data) {
         if (data.status == 'ok') {
+          if (window.pJSDom != null && !_this.state.logged) {
+            window.pJSDom[0].pJS.fn.vendors.destroypJS();
+          }
           _this.setState({
             logged: true
           });
@@ -104,11 +109,22 @@ var AuthActions = require('./../../actions/AuthActions');
           // Load info about current user
           socket.emit('user info', {username: socket.username});
           localStorage.setItem('userName', data.user.username);
-          localStorage.setItem('userPass', data.user.hashedPassword);
+          localStorage.setItem('userHash', data.user.hashedPassword);
         } else {
           _this.setState({error: data.error_message});
         }
       });
+
+      if (!this.state.logged) {
+        particlesJS.load('particles-js', 'assets/js/particles.json', function() {});
+      }
+
+    },
+
+    componentDidUpdate: function() {
+      // if (!this.state.logged && this.state.userInit && this.state.passInit) {
+      //   particlesJS.load('particles-js', 'assets/js/particles.json', function() {});
+      // }
     },
 
     componentWillUnmount: function () {
@@ -182,20 +198,28 @@ var AuthActions = require('./../../actions/AuthActions');
       return (
         <div>
           {this.state.logged == false && (
-            <div className="modal login__box">
-              <form className="form modal__body" onSubmit={this.handleLogin}>
-                <div className="form__row">
-                  {this.state.error && (
-                    <LoginError error={this.state.error} />
+            <div className="modal login__box" id="particles-js">
+              <ReactCSSTransitionGroup
+              transitionName = {{
+                enter: 'enter',
+                enterActive: 'enterActive',
+                leave: 'flipOutX',
+                leaveActive: 'flipOutX',
+                appear: 'fadeIn',
+                appearActive: 'appear'
+              }} transitionAppear={true}
+              transitionAppearTimeout={1500}
+              transitionEnterTimeout={1500}
+              transitionLeaveTimeout={1500} >
+                <form className="form modal__body animated" onSubmit={this.handleLogin}>
+                  {!this.state.passportInit && (
+                    <LoginDefault error={this.state.error} classUser={classesUser} classPass={classesPassword} handleName={this.handleNameChange} handlePassword={this.handlePasswordChange} />
                   )}
-                </div>
-                {!this.state.passportInit && (
-                  <LoginDefault classUser={classesUser} classPass={classesPassword} handleName={this.handleNameChange} handlePassword={this.handlePasswordChange} />
-                )}
-                {this.state.passportInit && (
-                  <LoginPassport classPass={classesPassword} handlePassword={this.handlePasswordChange}/>
-                )}
-              </form>
+                  {this.state.passportInit && (
+                    <LoginPassport classPass={classesPassword} handlePassword={this.handlePasswordChange}/>
+                  )}
+                </form>
+              </ReactCSSTransitionGroup>
             </div>
           )}
         </div>

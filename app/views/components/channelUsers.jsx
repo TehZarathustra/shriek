@@ -1,5 +1,5 @@
 var ChannelUsersComponent = function (socket) {
-
+  var React = require('react');
   var ChannelUsersStore = require('./../../stores/ChannelUsersStore')(socket);
   var ChannelUsersActions = require('./../../actions/ChannelUsersActions');
 
@@ -29,7 +29,7 @@ var ChannelUsersComponent = function (socket) {
       var channelUsers = [];
       var len = 0;
 
-      if (channel.is_private !== undefined) {
+      if (channel !== null && channel.is_private !== undefined) {
         if (!channel.is_private) {
           channelUsers = this.state.users;
         } else {
@@ -45,6 +45,7 @@ var ChannelUsersComponent = function (socket) {
 
       return (
         <div className="msg__users" >
+          {len > 0 && (
           <div className="msg__users-wrap">
             <div className="channel-info">
               <h3 className="channel-info__heading">{channel.name}</h3>
@@ -58,6 +59,7 @@ var ChannelUsersComponent = function (socket) {
               <MoreChannels len={len} />
             </div>
           </div>
+          )}
         </div>
       );
     }
@@ -81,12 +83,18 @@ var ChannelUsersComponent = function (socket) {
 
   var MoreChannels = React.createClass({
     render: function () {
-      var countDisplaying = 6;
+      var countDisplaying = 35;
       var hiddenUsersChannelCount = this.props.len - countDisplaying;
+
+      // return hiddenUsersChannelCount > 0 && (
+      //   <label className="more more_userschannel show_all_label" htmlFor="showUsersChannels">
+      //     <span>Показать +{hiddenUsersChannelCount}</span>
+      //   </label>
+      // );
 
       return hiddenUsersChannelCount > 0 && (
         <label className="more more_userschannel show_all_label" htmlFor="showUsersChannels">
-          <span>Показать +{hiddenUsersChannelCount}</span>
+          <span className="fa fa-sort-desc"></span>
         </label>
       );
     }
