@@ -21,6 +21,14 @@ var UserComponent = function (socket) {
       socket.on('user connected', function(data) {
           socket.emit('user list');
       });
+
+      socket.on('user disconnected', function(data) {
+        socket.emit('user list');
+      });
+
+      socket.on('user update', function(data) {
+        socket.emit('user list');
+      });
     },
 
     render: function () {
@@ -76,6 +84,7 @@ var UserComponent = function (socket) {
             _this.updateUser(data.user);
           }
         });
+
       },
 
       updateUser: function (user) {
@@ -91,11 +100,23 @@ var UserComponent = function (socket) {
           'online': this.state.online
         });
 
+        var classGender = cx ({
+          'gender': true,
+          'fa': true,
+          'fa-mars': this.props.user.setting.sex == 'male',
+          'fa-venus': this.props.user.setting.sex == 'female'
+        });
+
         return (
           <li className={classesList}>
             <a className="name clearfix">
               <div className="list__left">
-              <div className="user__image"><img src={this.props.user.setting.image}/></div>
+              <div className="user__image">
+                {this.props.user.setting.sex && (
+                  <div className={classGender}></div>
+                )}
+                <img src={this.props.user.setting.image}/>
+              </div>
               </div>
               <div className="list__right">
                 <div className="list__name">{this.props.user.username}</div>
