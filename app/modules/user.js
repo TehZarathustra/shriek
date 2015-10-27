@@ -215,7 +215,18 @@ var UserModule = function (socket, io) {
           user.online = isOnline;
 
           return user;
+
         });
+
+        function compare(a,b) {
+          if (a.online && !b.online)
+            return -1;
+          if (!a.online && b.online)
+            return 1;
+          return 0;
+        }
+
+        docs.sort(compare);
 
         out = {
           status: 'ok',

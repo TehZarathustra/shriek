@@ -45,21 +45,23 @@ var ChannelUsersComponent = function (socket) {
 
       return (
         <div className="msg__users" >
-          {len > 0 && (
           <div className="msg__users-wrap">
             <div className="channel-info">
-              <h3 className="channel-info__heading">{channel.name}</h3>
-              {channel.description && channel.description != "" && (
-                <h5 className="channel-info__decs">{channel.description}</h5>
+              {len > 0 && (
+                <div>
+                <h3 className="channel-info__heading">{channel.name}</h3>
+                {channel.description && channel.description != "" && (
+                  <h5 className="channel-info__decs">{channel.description}</h5>
+                )}
+                <input type="checkbox" id="showUsersChannels" className="show_all_checkbox" />
+                <ul className="list list_channelUsers">
+                  {Users}
+                </ul>
+                <MoreChannels len={len} />
+              </div>
               )}
-              <input type="checkbox" id="showUsersChannels" className="show_all_checkbox" />
-              <ul className="list list_channelUsers">
-                {Users}
-              </ul>
-              <MoreChannels len={len} />
             </div>
           </div>
-          )}
         </div>
       );
     }

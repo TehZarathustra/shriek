@@ -17,10 +17,14 @@ var UserComponent = function (socket) {
           _this.setState({users: data.users});
         }
       });
+
+      socket.on('user connected', function(data) {
+          socket.emit('user list');
+      });
     },
 
     render: function () {
-      Users = (<div>Loading users...</div>);
+      Users = (<div>Загружаем пользователей...</div>);
 
       if (this.state.users) {
         Users = this.state.users.map(function(user) {
@@ -52,6 +56,8 @@ var UserComponent = function (socket) {
 
       componentDidMount: function () {
         var _this = this;
+
+        socket.emit('user list');
 
         socket.on('user connected', function(data) {
           if (data.status === 'ok') {

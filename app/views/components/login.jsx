@@ -106,6 +106,13 @@ var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
             channel: 'general'
           });
 
+          socket.emit('channel get', {
+            channel: socket.activeChannel,
+            limit: 20,
+            force: true,
+           scrollAfter: true
+          });
+
           // Load info about current user
           socket.emit('user info', {username: socket.username});
           localStorage.setItem('userName', data.user.username);
