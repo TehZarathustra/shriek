@@ -39,6 +39,7 @@
     "passport-github2": "^0.1.9",
     "passport-google-oauth": "^0.2.0",
     "passport-twitter": "^1.0.3",
+    "browserify-resolutions": "^1.0.6",
     "react": "^0.14.0",
     "react-addons-css-transition-group": "^0.14.0",
     "react-dom": "^0.14.0",
@@ -55,7 +56,6 @@
     "wiredep": "^3.0.0-beta"
   },
   "devDependencies": {
-    "browserify-resolutions": "^1.0.6",
     "ghooks": "^0.3.2"
   },
   "config": {
