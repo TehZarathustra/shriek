@@ -88,12 +88,6 @@ gulp.task('build', function () {
     .pipe(gulp.dest(path.DEST_BUILD));
 });
 
-// images
-gulp.task('images', function () {
-  return gulp.src(path.IMGS)
-    .pipe(gulp.dest('./public/assets/img'));
-});
-
 // particles
 gulp.task('particles', function () {
   return gulp.src(path.PJS)
@@ -102,7 +96,7 @@ gulp.task('particles', function () {
 
 // sass
 
-gulp.task('sass', ['images'], function () {
+gulp.task('sass', ['particles'], function () {
   return gulp.src('app/assets/css/**/*.sass')
     .pipe(sass().on('error', sass.logError))
     .pipe(concat('bundle.min.css'))
