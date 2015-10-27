@@ -15,10 +15,10 @@ var passport = require('passport');
 var domain = '';
 switch (process.env.NODE_ENV) {
   case 'dev':
-    domain = 'shriek-zarathustra.herokuapp.com/';
+    domain = 'shriek-zarathustra.herokuapp.com';
     break;
   case 'production':
-    domain = 'shriek-zarathustra.herokuapp.com/';
+    domain = 'shriek-zarathustra.herokuapp.com';
     break;
   default:
     domain = 'localhost:5000';
